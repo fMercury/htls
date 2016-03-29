@@ -41,8 +41,61 @@
     <div class="container-fluid purple-container full-height-container" style="padding-top:50px;" ng-controller="centerController as centerCtrl">
       <div class="container">
         <!-- Three columns of text below the carousel -->
-        <div class="row text-center">
-          <h1> Nuestros clientes </h1>
+        <div class="row">
+          <h2> Completa el formulario </h2>
+          <div class="col-md-5">
+            <form id="client-form" class="form-horizontal" role="form">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-6 input-el">
+                    <input type="text" class="featturete form-control" id="name" placeholder="Nombre y Apellido" ng-model="username" required>
+                  </div>
+                  <div class="col-md-6 input-el">
+                    <input type="number" class="featturete form-control" id="dni" placeholder="DNI"  ng-model="dni">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 input-el">
+                    <input type="email" class="featturete form-control" id="email" placeholder="Email" required  ng-model="email">
+                  </div>
+                  <div class="col-md-6 input-el">
+                    <input type="phone" class="featturete form-control" id="phone" placeholder="Teléfono"  ng-model="phone">
+                  </div>
+                </div>
+              </div>
+             </form>
+          </div>
+          <div class="col-md-7">
+              <div class="row">
+                <div class="col-md-9">
+                  <div class="col-md-3">
+                    <div class="form-group col-md-12 input-el">
+                        <p> Hoteles seleccionados: </p>
+                    </div>
+                  </div>
+                  <div class="col-md-9">
+                  <div class="flex-container input-el">
+                    <span class="tag label label-info featturette flex-container-item" ng-repeat="hotel in selectedHotels">
+                      <span>{{hotel.name}}</span>
+                      <a ng-click="centerCtrl.removeHotel(hotel);"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+                    </span>
+                  </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group col-md-12 input-el text-center">
+                      <button type="submit" form="client-form" class="featturete btn btn-default" ng-disabled="!selectedHotels.length">Enviar mail</button>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="container">
+        <!-- Three columns of text below the carousel -->
+        <div class="row">
+          <h2> Selecciona hoteles </h2>
         </div>
         <div class="row">
           <div class="col-md-2">
@@ -77,7 +130,7 @@
             </div>
           </div>
           <div class="col-md-10 flex-container">
-            <div ng-repeat='client in filteredClients = (clients | filter:{name : searchText} | filter:{zone : searchType} | inArray:selectedStars:"stars")' class="client-div">
+            <div ng-repeat='client in filteredClients = (clients | filter:{name : searchText} | filter:{zone : searchType} | inArray:selectedStars:"stars")' class="client-div" ng-click="centerCtrl.addHotel(client);" ng-class="{selected : selectedHotels.includes(client)}">
               <img ng-src="../resources/logos/{{client.image}}">
             </div>
             <h3 ng-show="!filteredClients.length">No se han encontrado clientes que cumplan con los requisitos.</h3>
@@ -86,6 +139,5 @@
 
         </div><!-- /.row -->
       </div>
-    </div>
   </body>
 </html>

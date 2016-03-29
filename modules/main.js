@@ -1,32 +1,21 @@
 var app = angular.module("siteApp",[]);
 
-app.controller("centerController",["$scope", function($scope){
+app.controller("centerController",["$scope","$http", function($scope, $http){
 
-  this.getTypes = function(){
-    var types=[];
-    for (i in $scope.clients){
-      if (!types.includes($scope.clients[i].type)){
-        types.push($scope.clients[i].type);
-      }
-    }
-    return types;
-  };
 
-  this.selectStars = function(value){
-    if ($scope.selectedStars.includes(value)){
-      $scope.selectedStars.splice($scope.selectedStars.indexOf(value), 1);
-    }
-    else{
-      $scope.selectedStars.push(value);
-    }
-    console.log($scope.selectedStars);
-  };
 
   $scope.searchText="";
   $scope.searchType="";
   $scope.zones = ["Centro","Aquarium","Stella Maris","Casino Central","Centro Cultural Villa Victoria", "La Perla  - Constitución", "Laguna de los Padres","Monumento Alfonsina Storni","Museo del Mar","Playa Bristol","Playa Varese","Plaza Mitre","Plaza San Martín","Puerto de Mar del Plata","Punta Mogotes","Reserva de Lobos Marinos","Torreón del Monje"];
   $scope.filteredClients=[];
   $scope.selectedStars=[];
+  $scope.selectedHotels=[];
+
+  //Form information
+  $scope.username="";
+  $scope.email="";
+  $scope.phone="";
+  $scope.dni="";
 
   $scope.clients = [{
     "name" : "Cossack Spring Pea",
@@ -125,7 +114,55 @@ app.controller("centerController",["$scope", function($scope){
     },
   ];
 
-  $scope.availableTypes=this.getTypes();
+  this.getTypes = function(){
+    var types=[];
+    for (i in $scope.clients){
+      if (!types.includes($scope.clients[i].type)){
+        types.push($scope.clients[i].type);
+      }
+    }
+    return types;
+  };
+
+  this.selectStars = function(value){
+    if ($scope.selectedStars.includes(value)){
+      $scope.selectedStars.splice($scope.selectedStars.indexOf(value), 1);
+    }
+    else{
+      $scope.selectedStars.push(value);
+    }
+  };
+
+  this.addHotel = function(value){
+    if ($scope.selectedHotels.includes(value)){
+      $scope.selectedHotels.splice($scope.selectedHotels.indexOf(value), 1);
+    }
+    else{
+      $scope.selectedHotels.push(value);
+    }
+  };
+
+  this.removeHotel = function(value){
+    if ($scope.selectedHotels.includes(value)){
+      $scope.selectedHotels.splice($scope.selectedHotels.indexOf(value), 1);
+    }
+  };
+
+  this.sendEmail = function(){
+    console.log($scope.email);
+      $http({
+          method: 'GET',
+          url: '/sendEmail',
+          params: 'email='+$scope.email,
+       }).success(function(data){
+          // With the data succesfully returned, call our callback
+          callbackFunc(data);
+      }).error(function(){
+          alert("Todavía no se implementó!");
+      });
+    };
+
+    $scope.availableTypes=this.getTypes();
 
 }]);
 
