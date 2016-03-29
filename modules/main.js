@@ -12,86 +12,115 @@ app.controller("centerController",["$scope", function($scope){
     return types;
   };
 
+  this.selectStars = function(value){
+    if ($scope.selectedStars.includes(value)){
+      $scope.selectedStars.splice($scope.selectedStars.indexOf(value), 1);
+    }
+    else{
+      $scope.selectedStars.push(value);
+    }
+    console.log($scope.selectedStars);
+  };
+
   $scope.searchText="";
   $scope.searchType="";
+  $scope.zones = ["Centro","Aquarium","Stella Maris","Casino Central","Centro Cultural Villa Victoria", "La Perla  - Constitución", "Laguna de los Padres","Monumento Alfonsina Storni","Museo del Mar","Playa Bristol","Playa Varese","Plaza Mitre","Plaza San Martín","Puerto de Mar del Plata","Punta Mogotes","Reserva de Lobos Marinos","Torreón del Monje"];
+  $scope.filteredClients=[];
+  $scope.selectedStars=[];
 
   $scope.clients = [{
     "name" : "Cossack Spring Pea",
-    "type" : "Food & Drink",
+    "zone" : "Aquarium",
+    "stars" : "2",
     "image" : "1.jpg"
   },{
       "name" : "Doghouse Brewing Co.",
-      "type" : "Food & Drink",
+      "zone" : "Centro",
+      "stars" : "1",
       "image" : "2.jpg"
     },
     {
       "name" : "Fork And Knife",
-      "type" : "Food & Drink",
+      "zone" : "Laguna de los Padres",
+      "stars" : "4",
       "image" : "3.jpg"
     },
     {
       "name" : "KW",
-      "type" : "Clothing",
+      "zone" : "Casino Central",
+      "stars" : "2",
       "image" : "4.jpg"
     },
     {
       "name" : "Poids Plume",
-      "type" : "Food & Drink",
+      "zone" : "Centro",
+      "stars" : "2",
       "image" : "5.jpg"
     },
     {
       "name" : "Westlands",
-      "type" : "Food & Drink",
+      "zone" : "Centro",
+      "stars" : "3",
       "image" : "6.jpg"
     },
     {
       "name" : "Studio 45",
-      "type" : "Fitness",
+      "zone" : "Stella Maris",
+      "stars" : "5",
       "image" : "14.jpg"
     },
     {
       "name" : "Lingua Viva",
-      "type" : "Research & Learning",
+      "zone" : "Museo del Mar",
+      "stars" : "2",
       "image" : "7.jpg"
     },
     {
       "name" : "Beach Park",
-      "type" : "Lodging",
+      "zone" : "Laguna de los Padres",
+      "stars" : "2",
       "image" : "8.jpg"
     },
     {
       "name" : "Corsa Capital",
-      "type" : "Stock Brokers",
+      "zone" : "Playa Varese",
+      "stars" : "3",
       "image" : "9.jpg"
     },
     {
       "name" : "Taurus",
-      "type" : "Construction",
+      "zone" : "Plaza Mitre",
+      "stars" : "1",
       "image" : "15.jpg"
     },
     {
       "name" : "Tel",
-      "type" : "Stock Brokers",
+      "zone" : "Plaza Mitre",
+      "stars" : "3",
       "image" : "10.jpg"
     },
     {
       "name" : "M",
-      "type" : "Clothing",
+      "zone" : "Playa Varese",
+      "stars" : "4",
       "image" : "11.jpg"
     },
     {
       "name" : "Hula Hoop",
-      "type" : "Food & Drink",
+      "zone" : "Torreón del Monje",
+      "stars" : "5",
       "image" : "12.jpg"
     },
     {
       "name" : "Human",
-      "type" : "Clothing",
+      "zone" : "Torreón del Monje",
+      "stars" : "3",
       "image" : "16.jpg"
     },
     {
       "name" : "Act Research",
-      "type" : "Research & Learning",
+      "zone" : "Centro Cultural Villa Victoria",
+      "stars" : "4",
       "image" : "13.jpg"
     },
   ];
@@ -99,3 +128,18 @@ app.controller("centerController",["$scope", function($scope){
   $scope.availableTypes=this.getTypes();
 
 }]);
+
+app.filter('inArray', function($filter){
+    return function(list, arrayFilter, element){
+        if(arrayFilter){
+            return $filter("filter")(list, function(listItem){
+                if (!arrayFilter.length){
+                  return true;
+                }
+                else{
+                  return arrayFilter.indexOf(listItem[element]) != -1;
+                }
+            });
+        }
+    };
+});

@@ -38,7 +38,7 @@ body{
   width:200px;
   height:128px;
   margin: 10px 10px 10px 10px;
-  border: 3px solid;
+  border: 4px solid;
   border-color:gray;
 }
 
@@ -85,38 +85,8 @@ body{
    margin-top:20px;
  }
 
- .dark-body{
-   color:white
- }
-
- .dark-body h2{
-   color:#BDBDBD;
- }
-
- .dark-body .featturete{
-   border:2px solid;
-   border-color: #97E9FF;
-   border-radius: 3px;
-   padding: 10px 10px 10px 10px;
-   text-align: justify;
- }
-
- .dark-body .featturete h3{
-   margin: 5px 0px 5px 0px;
-   color:  #97E9FF;
- }
-
- .dark-body .featturete p{
-   color:  #6FD2ED;
- }
-
- .dark-body .featturete i{
-   color:  #97E9FF;
- }
-
- .content-only{
-   margin: 0px 0px 0px 0px;
-   padding: 0px 0px 0px 0px;
+ .input-el button{
+   margin:3px 3px 3px 3px;
  }
 
  span.featturete{
@@ -127,12 +97,12 @@ body{
    color: #97E9FF;
  }
 
-input.featturete, textarea.featturete{
+input.featturete, textarea.featturete, select.featturete{
   border:2px solid;
   border-color: #97E9FF;
   border-radius: 3px;
   background-color: transparent;
-  padding: 10px 10px 10px 10px;
+
   color: #97E9FF;
   text-align: justify;
 }
@@ -152,34 +122,11 @@ button.featturete{
     padding: 0px 10px 0px 10px;
 }
 
-/* Client center easing animations */
+.star-button.selected{
+  border-color: #97E9FF;
+  color: #97E9FF;
+}
 
-
- #panorama-container {
-     display: inline-block;
-     position: relative;
-     width: 100%;
- }
- #panorama-dummy {
-     margin-top: 75%; /* 4:3 aspect ratio */
- }
- #panorama {
-     position: absolute;
-     top: 0;
-     bottom: 0;
-     left: 0;
-     right: 0;
-     background-color: silver /* show me! */
- }
-
- #panoramajavascript {
-   position:absolute;
-   top: 0;
-   bottom: 0;
-   left: 0;
-   right: 0;
-background-image: url("../resources/pano1.jpg");
-
-background-position: left top;
-cursor: move;
-float: center;}
+img + .no-items {
+    display: none;
+}
