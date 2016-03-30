@@ -85,14 +85,14 @@
               </div>
           </div>
           <div class="col-md-5">
-            <form id="client-form" class="form-horizontal" role="form">
+            <form id="client-form" class="form-horizontal" role="form" ng-submit="centerCtrl.sendEmail()">
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6 input-el">
                     <input type="text" class="featturete form-control" id="name" placeholder="Nombre y Apellido" ng-model="username" required>
                   </div>
                   <div class="col-md-6 input-el">
-                    <input type="number" class="featturete form-control" id="dni" placeholder="DNI"  ng-model="dni">
+                    <input type="text" class="featturete form-control" id="dni" placeholder="DNI"  ng-model="dni">
                   </div>
                 </div>
                 <div class="row">
@@ -100,7 +100,7 @@
                     <input type="email" class="featturete form-control" id="email" placeholder="Email" required  ng-model="email">
                   </div>
                   <div class="col-md-6 input-el">
-                    <input type="phone" class="featturete form-control" id="phone" placeholder="Teléfono"  ng-model="phone">
+                    <input type="phone" class="featturete form-control" id="phone" placeholder="Teléfono"  ng-model="phone" required>
                   </div>
                 </div>
               </div>

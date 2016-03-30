@@ -205,12 +205,12 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
       $http({
           method: 'GET',
           url: '/sendEmail',
-          params: 'email='+$scope.email,
+          params: {'email' : $scope.email},
        }).success(function(data){
-          // With the data succesfully returned, call our callback
-          callbackFunc(data);
+          alert("¡El mail ha sido enviado con éxito!");
+          location.reload();
       }).error(function(){
-          alert("Todavía no se implementó!");
+          alert("Error en el envío.");
       });
     };
 
@@ -224,7 +224,6 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
     });
 
     $scope.filterRoomType = function(hotel){
-      console.log($scope.searchRoomType);
       if (hotel.roomType.includes($scope.searchRoomType) || $scope.searchRoomType==""){
         return true;
       }
@@ -232,7 +231,6 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
     }
 
     $scope.filterServices = function(hotel){
-      console.log(hotel.services);
       var allServices=true;
       var i=0;
       while (allServices && i<$scope.selectedServices.length){
@@ -255,10 +253,6 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
 
 app.filter('inArray', function($filter){
     return function(list, arrayFilter, element){
-      console.log("Element");
-      console.log(element);
-      console.log("ArrayFilter");
-      console.log(arrayFilter);
         if(arrayFilter){
             return $filter("filter")(list, function(listItem){
                 if (!arrayFilter.length){
