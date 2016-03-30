@@ -28,44 +28,50 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Client Center</a>
+          <a class="navbar-brand" href="#">HotelMDQ</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
-            <li class="active"><a href="/center">Client Center</a></li>
-            <li><a href="/testclient">Client 1</a></li>
-            <li><a href="/testclient2">Client 2</a></li>
+            <li class="active"><a href="/">Contacto</a></li>
           </ul>
         </div>
       </div>
     </nav>
     <div class="container-fluid purple-container full-height-container" style="padding-top:50px;" ng-controller="centerController as centerCtrl">
       <div class="container">
-        <!-- Three columns of text below the carousel -->
+        <div class="row">
+          <div class="jumbotron" style="background-color:#1C1C1C">
+            <h2 style="text-align:center">¡Encontrá tu hospedaje en Mar del Plata!</h2>
+            <p class="lead">
+            La plataforma HotelMdq te ayuda a encontrar, gestionar y garantizar tu reserva.
+            Con los servicios y en la zona de la ciudad que elijas.
+            Simplemente completa los siguientes pasos y nosotros nos encargamos del resto.
+            </p>
+          </div>
+        </div>
         <div class="row">
           <h2> Completa el formulario </h2>
           <div class="row">
-            <div class="col-md-4">
-                <div class=' input-group date' id='arrival-day-pick'>
-                      <input type='text' class="featturete form-control" />
-
-                      <span class="input-group-addon">Día de llegada
+            <div class="col-md-3">
+              <div class='input-append input-group date input-el' id='arrival-day-pick'>
+                    <input data-format="dd/MM/yyyy" type="text" class="featturete  form-control"></input>
+                    <span class="add-on input-group-addon">Fecha llegada
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+              </div>
+              <div  class="col-md-3">
+                <div class='input-append input-group date input-el' id='leaving-day-pick'>
+                      <input data-format="dd/MM/yyyy" type="text" class="featturete  form-control"></input>
+                      <span class="add-on input-group-addon">Fecha partida
                           <span class="glyphicon glyphicon-calendar"></span>
                       </span>
                   </div>
               </div>
-              <div  class="col-md-4">
-                <div class=' input-group date' id='leaving-day-pick'>
-                      <input type='text' class="featturete form-control" />
-                      <span class="input-group-addon">Día de partida
-                          <span class="glyphicon glyphicon-calendar"></span>
-                      </span>
-                  </div>
-              </div>
-              <div  class="col-md-4">
+              <div  class="col-md-3">
                 <div>
-                  <select type="text" class="featturete  form-control" id="roomType" placeholder="Tipo de habitación" ng-model="searchRoomType">
+                  <select type="text" class="featturete  form-control input-el" id="roomType" placeholder="Tipo de habitación" ng-model="searchRoomType">
                     <option value="" selected>Cualquier tipo de habitación</option>
                     <option value="Individual">Individual</option>
                     <option value="Doble">Doble</option>
@@ -73,6 +79,9 @@
                     <option value="Múltiple">Múltiple</option>
                   </select>
                 </div>
+              </div>
+              <div  class="col-md-3">
+                <input type="number" class="featturete form-control input-el" id="people" placeholder="Cantidad de personas"  ng-model="people">
               </div>
           </div>
           <div class="col-md-5">
@@ -162,11 +171,31 @@
                 <option ng-repeat="zone in zones" ng-value="{{value}}"> {{zone}} </option>
               </select>
             </div>
-            <!--Room type filter-->
+            <!--Services filter-->
+            <!--Stars filter-->
+            <div class="input-el">
+              <p> Servicios </p>
+              <button type="button" class="btn btn-default btn-sm star-button" ng-click="centerCtrl.addService('Wi-Fi');" ng-class="{selected : selectedServices.includes('Wi-Fi')}">
+                Wi-Fi   <i class="fa fa-wifi"></i>
+              </button>
+              <button type="button" class="btn btn-default btn-sm star-button" ng-click="centerCtrl.addService('Spa');" ng-class="{selected : selectedServices.includes('Spa')}" >
+                Spa   <span class="glyphicon glyphicon-tint" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="btn btn-default btn-sm star-button" ng-click="centerCtrl.addService('Playa');" ng-class="{selected : selectedServices.includes('Playa')}">
+                Playa  <i class="fa fa-umbrella"></i>
+              </button>
+              <button type="button" class="btn btn-default btn-sm star-button" ng-click="centerCtrl.addService('Pileta');" ng-class="{selected : selectedServices.includes('Pileta')}">
+                Pileta  <i class="fa fa-life-ring"></i>
+              </button>
+              <button type="button" class="btn btn-default btn-sm star-button" ng-click="centerCtrl.addService('Desayuno');" ng-class="{selected : selectedServices.includes('Desayuno')}">
+                Desayuno  <i class="fa fa-coffee"></i>
+              </button>
+            </div>
 
           </div>
           <div class="col-md-10 flex-container">
-            <div ng-repeat='client in filteredClients = (clients | filter:{name : searchName} | filter:{zone : searchZone} | filter:{roomType : searchRoomType} |inArray:selectedStars:"stars")' class="client-div" ng-click="centerCtrl.addHotel(client);" ng-class="{selected : selectedHotels.includes(client)}">
+            <!-- | inArray:selectedStars:"stars" -->
+            <div ng-repeat='client in filteredClients = (clients | filter:{name : searchName} | filter:{zone : searchZone} | filter:filterRoomType | filter:filterServices)' class="client-div" ng-click="centerCtrl.addHotel(client);" ng-class="{selected : selectedHotels.includes(client)}">
               <img ng-src="../resources/logos/{{client.image}}">
             </div>
             <h3 ng-show="!filteredClients.length">No se han encontrado clientes que cumplan con los requisitos.</h3>

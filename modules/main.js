@@ -13,122 +13,140 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
   $scope.filteredClients=[];
   $scope.selectedStars=[];
   $scope.selectedHotels=[];
+  $scope.selectedServices=[];
 
   //Form information
   $scope.username="";
   $scope.email="";
   $scope.phone="";
   $scope.dni="";
+  $scope.people="";
 
   $scope.clients = [{
     "name" : "Cossack Spring Pea",
     "zone" : "Aquarium",
     "stars" : "2",
-    "roomType": "Individual",
+    "roomType": ["Individual","Doble","Familiar","Mútiple"],
+    "services" : ["Wi-Fi","Desayuno"],
     "image" : "1.jpg"
   },{
       "name" : "Doghouse Brewing Co.",
       "zone" : "Centro",
       "stars" : "1",
-      "roomType": "Familiar",
+      "roomType": ["Familiar", "Múltiple"],
+      "services" : ["Wi-Fi","Desayuno"],
       "image" : "2.jpg"
     },
     {
       "name" : "Fork And Knife",
       "zone" : "Laguna de los Padres",
       "stars" : "4",
-      "roomType": "Múltiple",
+      "roomType": ["Múltiple"],
+      "services" : [],
       "image" : "3.jpg"
     },
     {
       "name" : "KW",
       "zone" : "Casino Central",
       "stars" : "2",
-      "roomType": "Familiar",
+      "roomType": ["Familiar", "Múltiple"],
+      "services" : ["Wi-Fi","Desayuno","Spa"],
       "image" : "4.jpg"
     },
     {
       "name" : "Poids Plume",
       "zone" : "Centro",
       "stars" : "2",
-      "roomType": "Doble",
+      "roomType": ["Doble","Familiar", "Múltiple"],
+      "services" : ["Wi-Fi","Desayuno"],
       "image" : "5.jpg"
     },
     {
       "name" : "Westlands",
       "zone" : "Centro",
       "stars" : "3",
-      "roomType": "Individual",
+      "roomType": ["Individual","Doble","Familiar","Mútiple"],
+      "services" : ["Wi-Fi","Desayuno"],
       "image" : "6.jpg"
     },
     {
       "name" : "Studio 45",
       "zone" : "Stella Maris",
       "stars" : "5",
-      "roomType": "Individual",
+      "roomType": ["Individual","Doble","Familiar","Mútiple"],
+      "services" : ["Wi-Fi","Desayuno","Pileta"],
       "image" : "14.jpg"
     },
     {
       "name" : "Lingua Viva",
       "zone" : "Museo del Mar",
       "stars" : "2",
-      "roomType": "Doble",
+      "roomType": ["Doble","Familiar", "Múltiple"],
+      "services" : ["Wi-Fi","Desayuno","Playa"],
       "image" : "7.jpg"
     },
     {
       "name" : "Beach Park",
       "zone" : "Laguna de los Padres",
       "stars" : "2",
-      "roomType": "Múltiple",
+      "roomType": ["Múltiple"],
+      "services" : ["Wi-Fi","Desayuno","Playa"],
       "image" : "8.jpg"
     },
     {
       "name" : "Corsa Capital",
       "zone" : "Playa Varese",
       "stars" : "3",
-      "roomType": "Doble",
+      "roomType": ["Doble","Familiar", "Múltiple"],
+      "services" : ["Wi-Fi","Desayuno","Pileta"],
       "image" : "9.jpg"
     },
     {
       "name" : "Taurus",
       "zone" : "Plaza Mitre",
       "stars" : "1",
-      "roomType": "Familiar",
+      "roomType": ["Familiar", "Múltiple"],
+      "services" : ["Wi-Fi","Desayuno"],
       "image" : "15.jpg"
     },
     {
       "name" : "Tel",
       "zone" : "Plaza Mitre",
       "stars" : "3",
-      "roomType": "Individual",
+      "roomType": ["Individual","Doble","Familiar","Mútiple"],
+      "services" : ["Wi-Fi","Pileta"],
       "image" : "10.jpg"
     },
     {
       "name" : "M",
       "zone" : "Playa Varese",
       "stars" : "4",
-      "roomType": "Doble",
+      "roomType": ["Doble","Familiar", "Múltiple"],
+      "services" : ["Wi-Fi","Desayuno","Spa","Pileta"],
       "image" : "11.jpg"
     },
     {
       "name" : "Hula Hoop",
       "zone" : "Torreón del Monje",
       "stars" : "5",
-      "roomType": "Familiar",
+      "roomType": ["Familiar", "Múltiple"],
+      "services" : ["Wi-Fi","Desayuno","Spa"],
       "image" : "12.jpg"
     },
     {
       "name" : "Human",
       "zone" : "Torreón del Monje",
       "stars" : "3",
-      "roomType": "Doble",
+      "roomType": ["Doble","Familiar", "Múltiple"],
+      "services" : ["Wi-Fi","Desayuno"],
       "image" : "16.jpg"
     },
     {
       "name" : "Act Research",
       "zone" : "Centro Cultural Villa Victoria",
       "stars" : "4",
-      "roomType": "",
+      "roomType": ["Doble","Familiar", "Múltiple"],
+      "services" : ["Wi-Fi","Desayuno"],
       "image" : "13.jpg"
     },
   ];
@@ -167,6 +185,21 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
     }
   };
 
+  this.addService = function(value){
+    if ($scope.selectedServices.includes(value)){
+      $scope.selectedServices.splice($scope.selectedServices.indexOf(value), 1);
+    }
+    else{
+      $scope.selectedServices.push(value);
+    }
+  };
+
+  this.removeService = function(value){
+    if ($scope.selectedServices.includes(value)){
+      $scope.selectedServices.splice($scope.selectedServices.indexOf(value), 1);
+    }
+  };
+
   this.sendEmail = function(){
     console.log($scope.email);
       $http({
@@ -190,11 +223,42 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
       });
     });
 
+    $scope.filterRoomType = function(hotel){
+      console.log($scope.searchRoomType);
+      if (hotel.roomType.includes($scope.searchRoomType) || $scope.searchRoomType==""){
+        return true;
+      }
+      else return false;
+    }
+
+    $scope.filterServices = function(hotel){
+      console.log(hotel.services);
+      var allServices=true;
+      var i=0;
+      while (allServices && i<$scope.selectedServices.length){
+        if (!hotel.services.length){
+          allServices=false;
+        }
+        else{
+          if (!hotel.services.includes($scope.selectedServices[i])){
+            allServices=false;
+          }
+        }
+        i++;
+      }
+      return allServices;
+    }
 
 }]);
 
+
+
 app.filter('inArray', function($filter){
     return function(list, arrayFilter, element){
+      console.log("Element");
+      console.log(element);
+      console.log("ArrayFilter");
+      console.log(arrayFilter);
         if(arrayFilter){
             return $filter("filter")(list, function(listItem){
                 if (!arrayFilter.length){

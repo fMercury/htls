@@ -171,7 +171,9 @@ span.featturette a:hover{
   color: #97E9FF;
 }
 
-
+.bootstrap-datetimepicker-widget ul{
+  padding: 0px 0px 0px 0px;
+}
 
 img + .no-items {
     display: none;
