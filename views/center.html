@@ -11,9 +11,11 @@
     <!--Bootstrap-->
     <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript"src="../node_modules/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <!--Custom styling-->
     <link rel="stylesheet" type="text/css" href="./style/home.css">
+    <link rel="stylesheet" type="text/css" href="../node_modules/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
   </head>
   <body ng-app="siteApp">
     <!--Top navigation bar-->
@@ -43,6 +45,36 @@
         <!-- Three columns of text below the carousel -->
         <div class="row">
           <h2> Completa el formulario </h2>
+          <div class="row">
+            <div class="col-md-4">
+                <div class=' input-group date' id='arrival-day-pick'>
+                      <input type='text' class="featturete form-control" />
+
+                      <span class="input-group-addon">Día de llegada
+                          <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                  </div>
+              </div>
+              <div  class="col-md-4">
+                <div class=' input-group date' id='leaving-day-pick'>
+                      <input type='text' class="featturete form-control" />
+                      <span class="input-group-addon">Día de partida
+                          <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                  </div>
+              </div>
+              <div  class="col-md-4">
+                <div>
+                  <select type="text" class="featturete  form-control" id="roomType" placeholder="Tipo de habitación" ng-model="searchRoomType">
+                    <option value="" selected>Cualquier tipo de habitación</option>
+                    <option value="Individual">Individual</option>
+                    <option value="Doble">Doble</option>
+                    <option value="Familiar">Familiar</option>
+                    <option value="Múltiple">Múltiple</option>
+                  </select>
+                </div>
+              </div>
+          </div>
           <div class="col-md-5">
             <form id="client-form" class="form-horizontal" role="form">
               <div class="form-group">
@@ -100,14 +132,15 @@
         <div class="row">
           <div class="col-md-2">
             <h3> Buscar... </h3>
+            <!--Name filter-->
             <div class="input-el">
-              <input type="text" class="featturete  form-control" id="name" placeholder="Nombre" ng-model="searchText">
+              <input type="text" class="featturete  form-control" id="name" placeholder="Nombre" ng-model="searchName">
             </div>
-            <!--Stars selection-->
+            <!--Stars filter-->
             <div class="input-el">
               <p> Estrellas </p>
               <button type="button" class="btn btn-default btn-xs star-button" ng-click="centerCtrl.selectStars('1');" ng-class="{selected : selectedStars.includes('1') }">
-                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                0-<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
               </button>
               <button type="button" class="btn btn-default btn-xs star-button" ng-click="centerCtrl.selectStars('2'); " ng-class="{selected : selectedStars.includes('2')}" >
                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
@@ -122,15 +155,18 @@
                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
               </button>
             </div>
+            <!--Zone filter-->
             <div class="input-el">
-              <select type="text" class="featturete  form-control" id="zone" placeholder="Zona" ng-model="searchType">
+              <select type="text" class="featturete  form-control" id="zone" placeholder="Zona" ng-model="searchZone">
                 <option value="" selected>Cualquier zona</option>
                 <option ng-repeat="zone in zones" ng-value="{{value}}"> {{zone}} </option>
               </select>
             </div>
+            <!--Room type filter-->
+
           </div>
           <div class="col-md-10 flex-container">
-            <div ng-repeat='client in filteredClients = (clients | filter:{name : searchText} | filter:{zone : searchType} | inArray:selectedStars:"stars")' class="client-div" ng-click="centerCtrl.addHotel(client);" ng-class="{selected : selectedHotels.includes(client)}">
+            <div ng-repeat='client in filteredClients = (clients | filter:{name : searchName} | filter:{zone : searchZone} | filter:{roomType : searchRoomType} |inArray:selectedStars:"stars")' class="client-div" ng-click="centerCtrl.addHotel(client);" ng-class="{selected : selectedHotels.includes(client)}">
               <img ng-src="../resources/logos/{{client.image}}">
             </div>
             <h3 ng-show="!filteredClients.length">No se han encontrado clientes que cumplan con los requisitos.</h3>

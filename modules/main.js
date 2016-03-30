@@ -2,10 +2,13 @@ var app = angular.module("siteApp",[]);
 
 app.controller("centerController",["$scope","$http", function($scope, $http){
 
+  var self=this;
 
+  //Filter variables
+  $scope.searchName="";
+  $scope.searchZone="";
+  $scope.searchRoomType="";
 
-  $scope.searchText="";
-  $scope.searchType="";
   $scope.zones = ["Centro","Aquarium","Stella Maris","Casino Central","Centro Cultural Villa Victoria", "La Perla  - Constitución", "Laguna de los Padres","Monumento Alfonsina Storni","Museo del Mar","Playa Bristol","Playa Varese","Plaza Mitre","Plaza San Martín","Puerto de Mar del Plata","Punta Mogotes","Reserva de Lobos Marinos","Torreón del Monje"];
   $scope.filteredClients=[];
   $scope.selectedStars=[];
@@ -21,95 +24,111 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
     "name" : "Cossack Spring Pea",
     "zone" : "Aquarium",
     "stars" : "2",
+    "roomType": "Individual",
     "image" : "1.jpg"
   },{
       "name" : "Doghouse Brewing Co.",
       "zone" : "Centro",
       "stars" : "1",
+      "roomType": "Familiar",
       "image" : "2.jpg"
     },
     {
       "name" : "Fork And Knife",
       "zone" : "Laguna de los Padres",
       "stars" : "4",
+      "roomType": "Múltiple",
       "image" : "3.jpg"
     },
     {
       "name" : "KW",
       "zone" : "Casino Central",
       "stars" : "2",
+      "roomType": "Familiar",
       "image" : "4.jpg"
     },
     {
       "name" : "Poids Plume",
       "zone" : "Centro",
       "stars" : "2",
+      "roomType": "Doble",
       "image" : "5.jpg"
     },
     {
       "name" : "Westlands",
       "zone" : "Centro",
       "stars" : "3",
+      "roomType": "Individual",
       "image" : "6.jpg"
     },
     {
       "name" : "Studio 45",
       "zone" : "Stella Maris",
       "stars" : "5",
+      "roomType": "Individual",
       "image" : "14.jpg"
     },
     {
       "name" : "Lingua Viva",
       "zone" : "Museo del Mar",
       "stars" : "2",
+      "roomType": "Doble",
       "image" : "7.jpg"
     },
     {
       "name" : "Beach Park",
       "zone" : "Laguna de los Padres",
       "stars" : "2",
+      "roomType": "Múltiple",
       "image" : "8.jpg"
     },
     {
       "name" : "Corsa Capital",
       "zone" : "Playa Varese",
       "stars" : "3",
+      "roomType": "Doble",
       "image" : "9.jpg"
     },
     {
       "name" : "Taurus",
       "zone" : "Plaza Mitre",
       "stars" : "1",
+      "roomType": "Familiar",
       "image" : "15.jpg"
     },
     {
       "name" : "Tel",
       "zone" : "Plaza Mitre",
       "stars" : "3",
+      "roomType": "Individual",
       "image" : "10.jpg"
     },
     {
       "name" : "M",
       "zone" : "Playa Varese",
       "stars" : "4",
+      "roomType": "Doble",
       "image" : "11.jpg"
     },
     {
       "name" : "Hula Hoop",
       "zone" : "Torreón del Monje",
       "stars" : "5",
+      "roomType": "Familiar",
       "image" : "12.jpg"
     },
     {
       "name" : "Human",
       "zone" : "Torreón del Monje",
       "stars" : "3",
+      "roomType": "Doble",
       "image" : "16.jpg"
     },
     {
       "name" : "Act Research",
       "zone" : "Centro Cultural Villa Victoria",
       "stars" : "4",
+      "roomType": "",
       "image" : "13.jpg"
     },
   ];
@@ -162,7 +181,15 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
       });
     };
 
-    $scope.availableTypes=this.getTypes();
+    $(document).ready(function(){
+      $scope.availableTypes=self.getTypes();
+      //Datepicker code
+      $(function () {
+            $('#arrival-day-pick').datetimepicker();
+            $('#leaving-day-pick').datetimepicker();
+      });
+    });
+
 
 }]);
 
