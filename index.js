@@ -38,8 +38,14 @@ app.get('/sendEmail', function(req, res){
 	}
 	var mailBody= "<h3> Hemos procesado una solicitud con los siguientes datos: </h3>"+"<p><b>Usuario: </b>"+req.query.username+"</p>"+"<p><b>Mail: </b>"+req.query.email+"</p>"+"<p><b>Teléfono: </b>"+req.query.phone+"</p>"+"<p><b>DNI: </b>"+req.query.dni+"</p>"+"<p><b>Fecha de llegada: </b>"+req.query.arrivalDate+"</p>"+"<p><b>Fecha de partida: </b>"+req.query.leavingDate+"</p>"+"<p><b>Cantidad de personas: </b>"+req.query.people+"</p>";
 	mailBody +="<h3> Los siguientes hoteles han sido seleccionados: </h3>";
-	for (i in req.query.hotels){
-		var hotel= JSON.parse(req.query.hotels[i]);
+	if (Array.isArray(req.query.hotels)){
+		for (i in req.query.hotels){
+			var hotel= JSON.parse(req.query.hotels[i]);
+			mailBody+="<p>"+hotel.name+"</p>";
+		}
+	}
+	else{
+		var hotel= JSON.parse(req.query.hotels);
 		mailBody+="<p>"+hotel.name+"</p>";
 	}
 	mailOptions.html=mailBody;
