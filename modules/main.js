@@ -16,6 +16,8 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
   $scope.selectedServices=[];
 
   //Form information
+  $scope.arrivalDate="";
+  $scope.leavingDate="";
   $scope.username="";
   $scope.email="";
   $scope.phone="";
@@ -205,7 +207,16 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
       $http({
           method: 'GET',
           url: '/sendEmail',
-          params: {'email' : $scope.email},
+          params: {
+            'username' : $scope.username,
+            "email" : $scope.email,
+            "phone" : $scope.phone,
+            "dni" : $scope.dni,
+            "arrivalDate": $scope.arrivalDate,
+            "leavingDate" : $scope.leavingDate,
+            "people" : $scope.people,
+            "hotels": $scope.selectedHotels
+          },
        }).success(function(data){
           alert("¡El mail ha sido enviado con éxito!");
           location.reload();
@@ -214,12 +225,25 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
       });
     };
 
+    this.printDates = function(){
+      console.log($scope.arrivalDate);
+      console.log($scope.leavingDate);
+    }
+
     $(document).ready(function(){
       $scope.availableTypes=self.getTypes();
       //Datepicker code
       $(function () {
             $('#arrival-day-pick').datetimepicker();
             $('#leaving-day-pick').datetimepicker();
+
+            $('#arrival-day-pick').datetimepicker().on("changeDate", function(ev){
+                $scope.arrivalDate=$('#arrival-input').val();
+            });
+
+            $('#leaving-day-pick').datetimepicker().on("changeDate", function(ev){
+                $scope.leavingDate=$('#leaving-input').val();
+            });
       });
     });
 

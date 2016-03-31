@@ -38,24 +38,24 @@
         </div>
       </div>
     </nav>
-    <div class="container-fluid purple-container full-height-container" style="padding-top:50px;" ng-controller="centerController as centerCtrl">
-      <div class="container">
-        <div class="row">
-          <div class="jumbotron" style="background-color:#1C1C1C">
-            <h2 style="text-align:center">¡Encontrá tu hospedaje en Mar del Plata!</h2>
-            <p class="lead">
-            La plataforma HotelMdq te ayuda a encontrar, gestionar y garantizar tu reserva.
-            Con los servicios y en la zona de la ciudad que elijas.
-            Simplemente completa los siguientes pasos y nosotros nos encargamos del resto.
-            </p>
-          </div>
-        </div>
-        <div class="row">
+      <div class="jumbotron header-jumbo text-center">
+        <h2>¡Encontrá tu hospedaje en Mar del Plata!</h2>
+        <p class="lead">
+        La plataforma HotelMdq te ayuda a encontrar, gestionar y garantizar tu reserva.
+        Con los servicios y en la zona de la ciudad que elijas.
+        Simplemente completa los siguientes pasos y nosotros nos encargamos del resto.
+        </p>
+      </div>
+    <div class="container-fluid purple-container full-height-container" style="padding-top:10px;" ng-controller="centerController as centerCtrl">
+      <div class="container form-container">
+
+        <div class="row text-center" >
           <h2> Completa el formulario </h2>
-          <div class="row">
+          <form id="client-form" class="form-horizontal" role="form" ng-submit="centerCtrl.sendEmail()">
+          <div class="row" >
             <div class="col-md-3">
               <div class='input-append input-group date input-el' id='arrival-day-pick'>
-                    <input data-format="dd/MM/yyyy" type="text" class="featturete  form-control"></input>
+                    <input data-format="dd/MM/yyyy" type="text" class="featturete form-control" id='arrival-input' required></input>
                     <span class="add-on input-group-addon">Fecha llegada
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -63,7 +63,7 @@
               </div>
               <div  class="col-md-3">
                 <div class='input-append input-group date input-el' id='leaving-day-pick'>
-                      <input data-format="dd/MM/yyyy" type="text" class="featturete  form-control"></input>
+                      <input data-format="dd/MM/yyyy" type="text" class="featturete form-control" id='leaving-input' required></input>
                       <span class="add-on input-group-addon">Fecha partida
                           <span class="glyphicon glyphicon-calendar"></span>
                       </span>
@@ -71,7 +71,7 @@
               </div>
               <div  class="col-md-3">
                 <div>
-                  <select type="text" class="featturete  form-control input-el" id="roomType" placeholder="Tipo de habitación" ng-model="searchRoomType">
+                  <select type="text" class="featturete  form-control input-el" id="roomType" placeholder="Tipo de habitación" ng-model="searchRoomType" required>
                     <option value="" selected>Cualquier tipo de habitación</option>
                     <option value="Individual">Individual</option>
                     <option value="Doble">Doble</option>
@@ -81,11 +81,11 @@
                 </div>
               </div>
               <div  class="col-md-3">
-                <input type="number" class="featturete form-control input-el" id="people" placeholder="Cantidad de personas"  ng-model="people">
+                <input type="number" class="featturete form-control input-el" id="people" placeholder="Cantidad de personas"  ng-model="people" required>
               </div>
           </div>
           <div class="col-md-5">
-            <form id="client-form" class="form-horizontal" role="form" ng-submit="centerCtrl.sendEmail()">
+
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6 input-el">
@@ -125,7 +125,7 @@
                 </div>
                 <div class="col-md-3">
                   <div class="form-group col-md-12 input-el text-center">
-                      <button type="submit" form="client-form" class="featturete btn btn-default" ng-disabled="!selectedHotels.length">Enviar mail</button>
+                      <button type="submit" form="client-form" class="btn btn-default" ng-disabled="!selectedHotels.length" id="sendmail-button">Enviar mail</button>
                   </div>
                 </div>
             </div>
@@ -133,9 +133,9 @@
         </div>
 
       </div>
-      <div class="container">
+      <div class="container form-container">
         <!-- Three columns of text below the carousel -->
-        <div class="row">
+        <div class="row text-center">
           <h2> Selecciona hoteles </h2>
         </div>
         <div class="row">
@@ -175,19 +175,19 @@
             <!--Stars filter-->
             <div class="input-el">
               <p> Servicios </p>
-              <button type="button" class="btn btn-default btn-sm star-button" ng-click="centerCtrl.addService('Wi-Fi');" ng-class="{selected : selectedServices.includes('Wi-Fi')}">
+              <button type="button" class="btn btn-default btn-sm service-button" ng-click="centerCtrl.addService('Wi-Fi');" ng-class="{selected : selectedServices.includes('Wi-Fi')}">
                 Wi-Fi   <i class="fa fa-wifi"></i>
               </button>
-              <button type="button" class="btn btn-default btn-sm star-button" ng-click="centerCtrl.addService('Spa');" ng-class="{selected : selectedServices.includes('Spa')}" >
+              <button type="button" class="btn btn-default btn-sm service-button" ng-click="centerCtrl.addService('Spa');" ng-class="{selected : selectedServices.includes('Spa')}" >
                 Spa   <span class="glyphicon glyphicon-tint" aria-hidden="true"></span>
               </button>
-              <button type="button" class="btn btn-default btn-sm star-button" ng-click="centerCtrl.addService('Playa');" ng-class="{selected : selectedServices.includes('Playa')}">
+              <button type="button" class="btn btn-default btn-sm service-button" ng-click="centerCtrl.addService('Playa');" ng-class="{selected : selectedServices.includes('Playa')}">
                 Playa  <i class="fa fa-umbrella"></i>
               </button>
-              <button type="button" class="btn btn-default btn-sm star-button" ng-click="centerCtrl.addService('Pileta');" ng-class="{selected : selectedServices.includes('Pileta')}">
+              <button type="button" class="btn btn-default btn-sm service-button" ng-click="centerCtrl.addService('Pileta');" ng-class="{selected : selectedServices.includes('Pileta')}">
                 Pileta  <i class="fa fa-life-ring"></i>
               </button>
-              <button type="button" class="btn btn-default btn-sm star-button" ng-click="centerCtrl.addService('Desayuno');" ng-class="{selected : selectedServices.includes('Desayuno')}">
+              <button type="button" class="btn btn-default btn-sm service-button" ng-click="centerCtrl.addService('Desayuno');" ng-class="{selected : selectedServices.includes('Desayuno')}">
                 Desayuno  <i class="fa fa-coffee"></i>
               </button>
             </div>
