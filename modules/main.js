@@ -7,7 +7,7 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
   //Filter variables
   $scope.searchName="";
   $scope.searchZone="";
-  $scope.searchRoomType="";
+  $scope.searchRoomType="none";
 
   $scope.zones = ["Centro","Aquarium","Stella Maris","Casino Central","Centro Cultural Villa Victoria", "La Perla  - Constitución", "Laguna de los Padres","Monumento Alfonsina Storni","Museo del Mar","Playa Bristol","Playa Varese","Plaza Mitre","Plaza San Martín","Puerto de Mar del Plata","Punta Mogotes","Reserva de Lobos Marinos","Torreón del Monje"];
   $scope.filteredClients=[];
@@ -224,12 +224,14 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
   }
 
   this.setSpecialRoomComplete = function(value){
-    console.log($scope.searchRoomType);
     $scope.specialRoomComplete=value;
   }
 
   this.sendEmail = function(){
-    console.log($scope.email);
+      var specialRoomData=[];
+      if ($scope.searchRoomType=='Familiar' || $scope.searchRoomType=='Múltiple'){
+        specialRoomData=$scope.specialRooms;
+      }
       $http({
           method: 'GET',
           url: '/sendEmail',
@@ -241,7 +243,8 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
             "arrivalDate": $scope.arrivalDate,
             "leavingDate" : $scope.leavingDate,
             "people" : $scope.people,
-            "hotels": $scope.selectedHotels
+            "hotels": $scope.selectedHotels,
+            "specialRooms" : specialRoomData
           },
        }).success(function(data){
           alert("¡El mail ha sido enviado con éxito!");
@@ -274,7 +277,7 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
     });
 
     $scope.filterRoomType = function(hotel){
-      if (hotel.roomType.includes($scope.searchRoomType) || $scope.searchRoomType==""){
+      if (hotel.roomType.includes($scope.searchRoomType) || $scope.searchRoomType=="none"){
         return true;
       }
       else return false;

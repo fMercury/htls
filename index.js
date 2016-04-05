@@ -48,6 +48,26 @@ app.get('/sendEmail', function(req, res){
 		var hotel= JSON.parse(req.query.hotels);
 		mailBody+="<p>"+hotel.name+"</p>";
 	}
+
+	var specialArray=[];
+	if (Array.isArray(req.query.specialRooms)){
+		for (k in req.query.specialRooms){
+			specialArray.push(JSON.parse(req.query.specialRooms[k]));
+		}
+	}
+	else{
+		specialArray.push(JSON.parse(req.query.specialRooms));
+	}
+	if (specialArray.length>0){
+		mailBody +="<h3> Se han especificado los siguientes datos sobre las habitaciones: </h3>";
+		for (i in specialArray){
+			mailBody+="<p> Habitación "+ i +". Adultos: "+specialArray[i].adults+". Niños: "+specialArray[i].kids+". Edades de los niños:</p>";
+			for (j in specialArray[i].kids_ages){
+				var obj=specialArray[i].kids_ages[j];
+				mailBody+="<p> Niño "+j+": "+obj.age+ " años. </p>";
+			}
+		}
+	}
 	mailOptions.html=mailBody;
 
 	// send mail with defined transport object

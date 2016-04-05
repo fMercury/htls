@@ -73,7 +73,7 @@
               <div  class="col-md-3">
                 <div>
                   <select type="text" class="featturete  form-control input-el" id="roomType" placeholder="Tipo de habitación" ng-change="centerCtrl.setSpecialRoomComplete(false)" ng-model="searchRoomType" required>
-                    <option value="" selected>Cualquier tipo de habitación</option>
+                    <option value="none" selected>Cualquier tipo de habitación</option>
                     <option value="Individual">Individual</option>
                     <option value="Doble">Doble</option>
                     <option value="Familiar">Familiar</option>
@@ -132,7 +132,7 @@
                 </div>
               </div>
               <div  class="col-md-3">
-                <input type="number" class="featturete form-control input-el" id="people" placeholder="Cantidad de personas"  ng-model="people" required>
+                <input type="number" class="featturete form-control input-el" id="people" placeholder="Cantidad de personas"  ng-model="people" ng-disabled="(searchRoomType=='Familiar' || searchRoomType=='Múltiple')" ng-required="(searchRoomType!='Familiar' && searchRoomType!='Múltiple')">
               </div>
           </div>
         </div>
