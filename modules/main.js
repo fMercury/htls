@@ -1,6 +1,6 @@
 var app = angular.module("siteApp",[]);
 
-app.controller("centerController",["$scope","$http", function($scope, $http){
+app.controller("centerController",["$scope","$http","$timeout", function($scope, $http, $timeout){
 
   var self=this;
 
@@ -8,6 +8,10 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
   $scope.searchName="";
   $scope.searchZone="";
   $scope.searchRoomType="none";
+
+  //Slider varialbe
+  $scope.startFade = false;;
+  $scope.sliderClosed=false;
 
   $scope.zones = ["Centro","Aquarium","Stella Maris","Casino Central","Centro Cultural Villa Victoria", "La Perla  - Constitución", "Laguna de los Padres","Monumento Alfonsina Storni","Museo del Mar","Playa Bristol","Playa Varese","Plaza Mitre","Plaza San Martín","Puerto de Mar del Plata","Punta Mogotes","Reserva de Lobos Marinos","Torreón del Monje"];
   $scope.filteredClients=[];
@@ -24,7 +28,6 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
   $scope.email="";
   $scope.phone="";
   $scope.dni="";
-  $scope.people="";
 
   $scope.clients = [{
     "name" : "Cossack Spring Pea",
@@ -232,6 +235,18 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
       if ($scope.searchRoomType=='Familiar' || $scope.searchRoomType=='Múltiple'){
         specialRoomData=$scope.specialRooms;
       }
+      var people=0;
+      if ($scope.searchRoomType=='Individual'){
+        people=1;
+      }
+      else if ($scope.searchRoomType=='Doble'){
+        people=2;
+      }
+      else{
+        for (k in specialRoomData){
+          people+=parseInt(specialRoomData[k].adults)+parseInt(specialRoomData[k].kids);
+        }
+      }
       $http({
           method: 'GET',
           url: '/sendEmail',
@@ -242,7 +257,7 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
             "dni" : $scope.dni,
             "arrivalDate": $scope.arrivalDate,
             "leavingDate" : $scope.leavingDate,
-            "people" : $scope.people,
+            "people" : people,
             "hotels": $scope.selectedHotels,
             "specialRooms" : specialRoomData
           },
@@ -254,10 +269,13 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
       });
     };
 
-    this.printDates = function(){
-      console.log($scope.arrivalDate);
-      console.log($scope.leavingDate);
-    }
+    $scope.closeSlider = function(){
+        $scope.startFade = true;
+        $timeout(function(){
+            $scope.sliderClosed=true;
+        }, 500);
+    };
+
 
     $(document).ready(function(){
       $scope.availableTypes=self.getTypes();

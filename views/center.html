@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="./style/home.css">
     <link rel="stylesheet" type="text/css" href="../node_modules/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
   </head>
-  <body ng-app="siteApp">
+  <body ng-app="siteApp" ng-controller="centerController as centerCtrl">
     <!--Top navigation bar-->
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
@@ -38,15 +38,20 @@
         </div>
       </div>
     </nav>
-      <div class="jumbotron header-jumbo text-center">
-        <h2>¡Encontrá tu hospedaje en Mar del Plata!</h2>
-        <p class="lead">
-        La plataforma HotelMdq te ayuda a encontrar, gestionar y garantizar tu reserva.
-        Con los servicios y en la zona de la ciudad que elijas.
-        Simplemente completa los siguientes pasos y nosotros nos encargamos del resto.
-        </p>
+      <div class="jumbotron container-fluid full-height-container text-center" id="welcome-overlay" ng-hide="sliderClosed" ng-class="{fadeout : startFade}">
+        <div class="container">
+          <h1>¡Encontrá tu hospedaje en Mar del Plata!</h1>
+          <br>
+          <h3>
+          La plataforma HotelMdq te ayuda a encontrar, gestionar y garantizar tu reserva.
+          Con los servicios y en la zona de la ciudad que elijas.
+          Simplemente completa los siguientes pasos y nosotros nos encargamos del resto.
+          </h3>
+          <br><br>
+          <button type="button" class="btn-lg btn-default" ng-click="closeSlider();">  ¡Comenzar ahora!  </button>
+        </div>
       </div>
-    <div class="container-fluid purple-container full-height-container" style="padding-top:10px;" ng-controller="centerController as centerCtrl">
+    <div class="container-fluid purple-container full-height-container" style="padding-top:60px;" >
       <div class="container form-container">
 
         <div class="row text-center" >
@@ -54,7 +59,7 @@
           <h2> Selecciona hoteles </h2>
           <form id="client-form" class="form-horizontal" role="form" ng-submit="centerCtrl.sendEmail()">
           <div class="row" >
-            <div class="col-md-3">
+            <div class="col-md-4">
               <div class='input-append input-group date input-el' id='arrival-day-pick'>
                     <input data-format="dd/MM/yyyy" type="text" class="featturete form-control" id='arrival-input' required></input>
                     <span class="add-on input-group-addon">Fecha llegada
@@ -62,7 +67,7 @@
                     </span>
                 </div>
               </div>
-              <div  class="col-md-3">
+              <div  class="col-md-4">
                 <div class='input-append input-group date input-el' id='leaving-day-pick'>
                       <input data-format="dd/MM/yyyy" type="text" class="featturete form-control" id='leaving-input' required></input>
                       <span class="add-on input-group-addon">Fecha partida
@@ -70,7 +75,7 @@
                       </span>
                   </div>
               </div>
-              <div  class="col-md-3">
+              <div  class="col-md-4">
                 <div>
                   <select type="text" class="featturete  form-control input-el" id="roomType" placeholder="Tipo de habitación" ng-change="centerCtrl.setSpecialRoomComplete(false)" ng-model="searchRoomType" required>
                     <option value="none" selected>Cualquier tipo de habitación</option>
@@ -130,9 +135,6 @@
                     <button type="button" class="btn btn-default"  ng-click="centerCtrl.setSpecialRoomComplete(true)">Confirmar</button>
                   </div>
                 </div>
-              </div>
-              <div  class="col-md-3">
-                <input type="number" class="featturete form-control input-el" id="people" placeholder="Cantidad de personas"  ng-model="people" ng-disabled="(searchRoomType=='Familiar' || searchRoomType=='Múltiple')" ng-required="(searchRoomType!='Familiar' && searchRoomType!='Múltiple')">
               </div>
           </div>
         </div>
