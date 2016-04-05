@@ -75,8 +75,12 @@ body{
   display:flex;
   align-items: center;
   justify-content: center;
-  vertical-align: middle;
+
   flex-wrap:wrap;
+}
+
+.flex-container .top{
+  vertical-align: top;
 }
 
 .flex-container-item{
@@ -193,6 +197,29 @@ img + .no-items {
   border: 1px solid;
   border-color:#A4A4A4;
   border-radius:3px;
+}
+
+.roomtype-popup{
+  position:absolute;
+  width:300px;
+  z-index: 1;
+  background:white;
+  margin-top:1px;
+  font-size: 12px;
+}
+
+.roomtype-popup select, .roomtype-popup input{
+  display:inline;
+  margin-top:3px;
+  padding:2px 10px 2px 2px;
+  font-size:12px;
+  width:50px;
+}
+
+.roomtype-popup button{
+  display:inline;
+  margin:3px 3px 3px 0px;
+  font-size:12px;
 }
 
 #sendmail-button{

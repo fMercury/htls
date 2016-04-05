@@ -50,7 +50,8 @@
       <div class="container form-container">
 
         <div class="row text-center" >
-          <h2> Completa el formulario </h2>
+          <!--<h2> Completa el formulario </h2>-->
+          <h2> Selecciona hoteles </h2>
           <form id="client-form" class="form-horizontal" role="form" ng-submit="centerCtrl.sendEmail()">
           <div class="row" >
             <div class="col-md-3">
@@ -71,76 +72,74 @@
               </div>
               <div  class="col-md-3">
                 <div>
-                  <select type="text" class="featturete  form-control input-el" id="roomType" placeholder="Tipo de habitación" ng-model="searchRoomType" required>
+                  <select type="text" class="featturete  form-control input-el" id="roomType" placeholder="Tipo de habitación" ng-change="centerCtrl.setSpecialRoomComplete(false)" ng-model="searchRoomType" required>
                     <option value="" selected>Cualquier tipo de habitación</option>
                     <option value="Individual">Individual</option>
                     <option value="Doble">Doble</option>
                     <option value="Familiar">Familiar</option>
                     <option value="Múltiple">Múltiple</option>
                   </select>
+                  <div class="form-container roomtype-popup text-left" ng-show="(searchRoomType=='Familiar' || searchRoomType=='Múltiple') && !specialRoomComplete">
+                    <p>Familiar</p>
+                    <hr>
+                    <div ng-repeat="room in specialRooms">
+                      <p> Habitación {{$index+1}} <span><a style="cursor:pointer" ng-show="specialRooms.length>1" ng-click="centerCtrl.removeSpecialRoom($index)"> (Eliminar) </a></span></p>
+                      <span> Cantidad de adultos(+18):  </span>
+                      <select type="number" class="featturete form-control" ng-model="room.adults">
+                        <option value="0"> 0 </option>
+                        <option value="1"> 1 </option>
+                        <option value="2" ng-selected="true"> 2 </option>
+                        <option value="3"> 3 </option>
+                        <option value="4"> 4 </option>
+                      </select>
+                      <br>
+                      <span> Cantidad de niños(-18):  </span>
+                      <select type="number" class="featturete form-control" ng-model="room.kids" ng-change="centerCtrl.changeKidsAmount($index)">
+                        <option value="0" ng-selected="true"> 0 </option>
+                        <option value="1"> 1 </option>
+                        <option value="2"> 2 </option>
+                        <option value="3"> 3 </option>
+                        <option value="4"> 4 </option>
+                      </select>
+                      <br>
+                      <span ng-show="room.kids>0"> Edad de los niños:  </span>
+                      <select type="number" ng-repeat="kid in room.kids_ages" type="number" class="featturete form-control" ng-model=kid.age>
+                        <option value="0"> 0 </option>
+                        <option value="1"> 1 </option>
+                        <option value="2" ng-selected="true"> 2 </option>
+                        <option value="3"> 3 </option>
+                        <option value="4"> 4 </option>
+                        <option value="5"> 5 </option>
+                        <option value="6"> 6 </option>
+                        <option value="7"> 7 </option>
+                        <option value="8"> 8 </option>
+                        <option value="9"> 9 </option>
+                        <option value="10"> 10 </option>
+                        <option value="11"> 11 </option>
+                        <option value="12"> 12 </option>
+                        <option value="13"> 13 </option>
+                        <option value="14"> 14</option>
+                        <option value="15"> 15 </option>
+                        <option value="16"> 16 </option>
+                        <option value="17"> 17 </option>
+                      </select>
+                      <hr>
+                    </div>
+
+                    <button type="button" class="btn btn-default" ng-click="centerCtrl.addSpecialRoom()">+ Agregar habitación</button>
+                    <button type="button" class="btn btn-default"  ng-click="centerCtrl.setSpecialRoomComplete(true)">Confirmar</button>
+                  </div>
                 </div>
               </div>
               <div  class="col-md-3">
                 <input type="number" class="featturete form-control input-el" id="people" placeholder="Cantidad de personas"  ng-model="people" required>
               </div>
           </div>
-          <div class="col-md-5">
-
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-md-6 input-el">
-                    <input type="text" class="featturete form-control" id="name" placeholder="Nombre y Apellido" ng-model="username" required>
-                  </div>
-                  <div class="col-md-6 input-el">
-                    <input type="text" class="featturete form-control" id="dni" placeholder="DNI"  ng-model="dni">
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 input-el">
-                    <input type="email" class="featturete form-control" id="email" placeholder="Email" required  ng-model="email">
-                  </div>
-                  <div class="col-md-6 input-el">
-                    <input type="phone" class="featturete form-control" id="phone" placeholder="Teléfono"  ng-model="phone" required>
-                  </div>
-                </div>
-              </div>
-             </form>
-          </div>
-          <div class="col-md-7">
-              <div class="row">
-                <div class="col-md-9">
-                  <div class="col-md-3">
-                    <div class="form-group col-md-12 input-el">
-                        <p> Hoteles seleccionados: </p>
-                    </div>
-                  </div>
-                  <div class="col-md-9">
-                  <div class="flex-container input-el">
-                    <span class="tag label label-info featturette flex-container-item" ng-repeat="hotel in selectedHotels">
-                      <span>{{hotel.name}}</span>
-                      <a ng-click="centerCtrl.removeHotel(hotel);"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
-                    </span>
-                  </div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group col-md-12 input-el text-center">
-                      <button type="submit" form="client-form" class="btn btn-default" ng-disabled="!selectedHotels.length" id="sendmail-button">Enviar mail</button>
-                  </div>
-                </div>
-            </div>
-          </div>
         </div>
-
-      </div>
-      <div class="container form-container">
-        <!-- Three columns of text below the carousel -->
-        <div class="row text-center">
-          <h2> Selecciona hoteles </h2>
-        </div>
+        <br>
         <div class="row">
           <div class="col-md-2">
-            <h3> Buscar... </h3>
+            <h3> Filtrar por... </h3>
             <!--Name filter-->
             <div class="input-el">
               <input type="text" class="featturete  form-control" id="name" placeholder="Nombre" ng-model="searchName">
@@ -200,8 +199,57 @@
             <h3 ng-show="!filteredClients.length">No se han encontrado clientes que cumplan con los requisitos.</h3>
           </div>
         </div>
-
         </div><!-- /.row -->
+        <div class="container form-container">
+          <div class="row">
+            <div class="col-md-5">
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-6 input-el">
+                      <input type="text" class="featturete form-control" id="name" placeholder="Nombre y Apellido" ng-model="username" required>
+                    </div>
+                    <div class="col-md-6 input-el">
+                      <input type="text" class="featturete form-control" id="dni" placeholder="DNI"  ng-model="dni">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 input-el">
+                      <input type="email" class="featturete form-control" id="email" placeholder="Email" required  ng-model="email">
+                    </div>
+                    <div class="col-md-6 input-el">
+                      <input type="phone" class="featturete form-control" id="phone" placeholder="Teléfono"  ng-model="phone" required>
+                    </div>
+                  </div>
+                </div>
+               </form>
+            </div>
+            <div class="col-md-7">
+                <div class="row">
+                  <div class="col-md-9">
+                    <div class="col-md-3">
+                      <div class="form-group col-md-12 input-el">
+                          <p> Hoteles seleccionados: </p>
+                      </div>
+                    </div>
+                    <div class="col-md-9">
+                    <div class="flex-container input-el">
+                      <span class="tag label label-info featturette flex-container-item" ng-repeat="hotel in selectedHotels">
+                        <span>{{hotel.name}}</span>
+                        <a ng-click="centerCtrl.removeHotel(hotel);"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+                      </span>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group col-md-12 input-el text-center">
+                        <button type="submit" form="client-form" class="btn btn-default" ng-disabled="!selectedHotels.length" id="sendmail-button">Enviar mail</button>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
   </body>
 </html>

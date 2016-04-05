@@ -14,6 +14,8 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
   $scope.selectedStars=[];
   $scope.selectedHotels=[];
   $scope.selectedServices=[];
+  $scope.specialRooms = [{"adults" : 2, "kids":0, "kids_ages": []}];
+  $scope.specialRoomComplete=false;
 
   //Form information
   $scope.arrivalDate="";
@@ -201,6 +203,30 @@ app.controller("centerController",["$scope","$http", function($scope, $http){
       $scope.selectedServices.splice($scope.selectedServices.indexOf(value), 1);
     }
   };
+
+  this.changeKidsAmount = function(index){
+    console.log(index);
+    var new_ages=[];
+    var i=0;
+    while (i<$scope.specialRooms[index].kids){
+      new_ages.push({"age" : 2});
+      i++;
+    }
+    $scope.specialRooms[index].kids_ages=new_ages;
+  }
+
+  this.addSpecialRoom = function(){
+    $scope.specialRooms.push({"adults" : 2, "kids":0, "kids_ages": []});
+  }
+
+  this.removeSpecialRoom = function(index){
+    $scope.specialRooms.splice(index,1);
+  }
+
+  this.setSpecialRoomComplete = function(value){
+    console.log($scope.searchRoomType);
+    $scope.specialRoomComplete=value;
+  }
 
   this.sendEmail = function(){
     console.log($scope.email);
