@@ -20,6 +20,9 @@ app.controller("centerController",["$scope","$http","$timeout", function($scope,
   $scope.selectedServices=[];
   $scope.specialRooms = [{"adults" : 2, "kids":0, "kids_ages": []}];
   $scope.specialRoomComplete=false;
+  $scope.accomodationType = "";
+  $scope.apartamentType='2';
+  $scope.roomQuality='standard';
 
   //Form information
   $scope.arrivalDate="";
@@ -28,6 +31,10 @@ app.controller("centerController",["$scope","$http","$timeout", function($scope,
   $scope.email="";
   $scope.phone="";
   $scope.dni="";
+
+  $scope.eh = function(){
+    console.log($scope.roomQuality);
+  }
 
   $scope.clients = [{
     "name" : "Cossack Spring Pea",

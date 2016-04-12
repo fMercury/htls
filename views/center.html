@@ -31,22 +31,18 @@
           <a class="navbar-brand" href="#">HotelMDQ</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="/">Home</a></li>
-            <li class="active"><a href="/">Contacto</a></li>
-          </ul>
         </div>
       </div>
     </nav>
       <div class="jumbotron container-fluid full-height-container text-center" id="welcome-overlay" ng-hide="sliderClosed" ng-class="{fadeout : startFade}">
         <div class="container">
-          <h1>¡Encontrá tu hospedaje en Mar del Plata!</h1>
+          <h2>¡Encontrá tu hospedaje en Mar del Plata!</h2>
           <br>
-          <h3>
+          <p class="lead">
           La plataforma HotelMdq te ayuda a encontrar, gestionar y garantizar tu reserva.
           Con los servicios y en la zona de la ciudad que elijas.
           Simplemente completa los siguientes pasos y nosotros nos encargamos del resto.
-          </h3>
+          </p>
           <br><br>
           <button type="button" class="btn-lg btn-default" ng-click="closeSlider();">  ¡Comenzar ahora!  </button>
         </div>
@@ -56,10 +52,10 @@
 
         <div class="row text-center" >
           <!--<h2> Completa el formulario </h2>-->
-          <h2> Selecciona hoteles </h2>
+          <h2> Seleccionar hospedaje </h2>
           <form id="client-form" class="form-horizontal" role="form" ng-submit="centerCtrl.sendEmail()">
           <div class="row" >
-            <div class="col-md-4">
+            <div class="col-md-3">
               <div class='input-append input-group date input-el' id='arrival-day-pick'>
                     <input data-format="dd/MM/yyyy" type="text" class="featturete form-control" id='arrival-input' required></input>
                     <span class="add-on input-group-addon">Fecha llegada
@@ -67,7 +63,7 @@
                     </span>
                 </div>
               </div>
-              <div  class="col-md-4">
+              <div  class="col-md-3">
                 <div class='input-append input-group date input-el' id='leaving-day-pick'>
                       <input data-format="dd/MM/yyyy" type="text" class="featturete form-control" id='leaving-input' required></input>
                       <span class="add-on input-group-addon">Fecha partida
@@ -75,10 +71,19 @@
                       </span>
                   </div>
               </div>
-              <div  class="col-md-4">
-                <div>
+              <div  class="col-md-3">
+                <div class='input-el'>
+                  <select type="text" class="featturete  form-control input-el" id="accomodation" ng-change="eh()" placeholder="Tipo de alojamiento" ng-model="accomodationType" ng-init="accomodationType='hotel'" required>
+                    <option value="hotel" selected>Hotel</option>
+                    <option value="hostel">Hostel</option>
+                    <option value="departamento">Departamento</option>
+                  </select>
+                </div>
+              </div>
+              <div  class="col-md-3">
+                <div  ng-show="accomodationType=='hotel'"">
                   <select type="text" class="featturete  form-control input-el" id="roomType" placeholder="Tipo de habitación" ng-change="centerCtrl.setSpecialRoomComplete(false)" ng-model="searchRoomType" required>
-                    <option value="none" selected>Cualquier tipo de habitación</option>
+                    <option value="none" selected>Habitación</option>
                     <option value="Individual">Individual</option>
                     <option value="Doble">Doble</option>
                     <option value="Familiar">Familiar</option>
@@ -135,10 +140,19 @@
                     <button type="button" class="btn btn-default"  ng-click="centerCtrl.setSpecialRoomComplete(true)">Confirmar</button>
                   </div>
                 </div>
-              </div>
-          </div>
+                <div ng-show="accomodationType=='departamento'">
+                      <div class='input-el'>
+                        <select type="text" class="featturete  form-control input-el" id="apartament" placeholder="Tipo de alojamiento" ng-model="apartamentType" required>
+                          <option value="2" selected>2 personas</option>
+                          <option value="4">4 personas</option>
+                          <option value="6">6 personas</option>
+                        </select>
+                      </div>
+                </div>
+            </div>
         </div>
         <br>
+        </div>
         <div class="row">
           <div class="col-md-2">
             <h3> Filtrar por... </h3>
@@ -167,6 +181,7 @@
             </div>
             <!--Zone filter-->
             <div class="input-el">
+              <p> Zona </p>
               <select type="text" class="featturete  form-control" id="zone" placeholder="Zona" ng-model="searchZone">
                 <option value="" selected>Cualquier zona</option>
                 <option ng-repeat="zone in zones" ng-value="{{value}}"> {{zone}} </option>
@@ -221,6 +236,12 @@
                     </div>
                     <div class="col-md-6 input-el">
                       <input type="phone" class="featturete form-control" id="phone" placeholder="Teléfono"  ng-model="phone" required>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 input-el text-center">
+                      <label class="radio-inline"><input type="radio" value="standard" name="optradio" checked ng-model="roomQuality" ng-change="eh()">Habitación estándar</label>
+                      <label class="radio-inline"><input type="radio" value="superior " name="optradio" ng-model="roomQuality" ng-change="eh()">Habitación superior</label>
                     </div>
                   </div>
                 </div>

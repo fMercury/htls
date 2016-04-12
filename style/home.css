@@ -219,7 +219,7 @@ img + .no-items {
   padding-bottom:10px;
   margin-bottom:0px;
   background-color:rgba(28, 28, 28, 0.97);
-  max-height: 100vh;
+  height: 100vh;
   color:white;
   position:fixed;
   z-index: 10;
