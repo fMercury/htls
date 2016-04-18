@@ -217,6 +217,7 @@ img + .no-items {
   padding-left:10px;
   padding-right:10px;
   padding-bottom:10px;
+  padding-top:55px;
   margin-bottom:0px;
   background-color:rgba(28, 28, 28, 0.97);
   height: 100vh;
@@ -226,6 +227,27 @@ img + .no-items {
   transition-property: all;
 	transition-duration: .5s;
 	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+/*Responsive overlay font size */
+@media (max-width: 400px) and (max-height: 560px){
+  p.responsive-font {
+    font-size: 1.1em;
+  }
+
+  button.responsive-font {
+    font-size: 1.1em;
+  }
+}
+
+@media (min-width: 500px) and (min-height: 700px){
+  p.responsive-font {
+    font-size: 2em;
+  }
+
+  button.responsive-font {
+    font-size: 2em;
+  }
 }
 
 .fadein, .fadeout {
